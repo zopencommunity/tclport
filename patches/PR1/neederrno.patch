@@ -1,0 +1,12 @@
+diff --git a/generic/tclIO.c b/generic/tclIO.c
+index 43b7ce3..f85d3f4 100644
+--- a/generic/tclIO.c
++++ b/generic/tclIO.c
+@@ -15,6 +15,7 @@
+ #include "tclInt.h"
+ #include "tclIO.h"
+ #include <assert.h>
++#include <errno.h>
+ 
+ /*
+  * For each channel handler registered in a call to Tcl_CreateChannelHandler,

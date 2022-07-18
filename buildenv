@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Set up environment variables for general build tool to operate
+#
+if ! [ -f ./buildenv ]; then
+	echo "Need to source from the buildenv directory" >&2
+	return 0
+fi
+
+export ZOPEN_ROOT="${PWD}"
+export ZOPEN_TYPE="TARBALL"
+
+ZOPEN_TARBALL_DIR=tcl-core8.6.12-src
+export ZOPEN_TARBALL_URL="https://sourceforge.net/projects/tcl/files/Tcl/8.6.12/${ZOPEN_TARBALL_DIR}.tar.gz"
+export ZOPEN_TARBALL_DEPS="curl gzip make"
+
+export ZOPEN_SRC_DIR=unix
+
+rm -f tcl-core8.6.12-src
+ln -s tcl8.6.12 tcl-core8.6.12-src

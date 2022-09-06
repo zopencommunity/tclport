@@ -12,3 +12,9 @@ export ZOPEN_SRC_DIR=unix
 
 rm -f tcl-core8.6.12-src
 ln -s tcl8.6.12 tcl-core8.6.12-src
+
+zopen_check_results()
+{
+  return 3
+}
+

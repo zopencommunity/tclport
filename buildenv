@@ -5,11 +5,12 @@ export ZOPEN_TYPE="TARBALL"
 
 ZOPEN_TARBALL_DIR=tcl-core8.6.12-src
 export ZOPEN_TARBALL_URL="https://sourceforge.net/projects/tcl/files/Tcl/8.6.12/${ZOPEN_TARBALL_DIR}.tar.gz"
-export ZOPEN_TARBALL_DEPS="curl gzip make"
+export ZOPEN_TARBALL_DEPS="curl gzip make zoslib"
 export ZOPEN_CHECK="skip"
-
+export ZOPEN_EXTRA_CPPFLAGS="-DNEED_FAKE_RFC2553=1"
+export ZOPEN_EXTRA_CFLAGS="$ZOPEN_EXTRA_CPPFLAGS" 
 export ZOPEN_SRC_DIR=unix
-
+export ZOPEN_CHECK_OPTS='test'
 rm -f tcl-core8.6.12-src
 ln -s tcl8.6.12 tcl-core8.6.12-src
 

@@ -37,3 +37,7 @@ zopen_check_results()
   return 3 # non-functional
 }
 
+zopen_get_version()
+{
+  echo 'puts [info patchlevel];exit 0' | ./tclsh
+}

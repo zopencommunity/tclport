@@ -1,5 +1,5 @@
 # bump: tcl-version /TCL_VERSION="(.*)"/ https://sourceforge.net/projects/tcl/files/Tcl/|re:/Click.to.enter.([\d.]+)"/$1/|semver:*
-TCL_VERSION="8.6.12"
+TCL_VERSION="8.6.13"
 TCL_VR=$(echo $TCL_VERSION | cut -d '.' -f 1,2)
 TCL_VERSION_STRING="tcl-core${TCL_VERSION}-src"
 
@@ -11,6 +11,8 @@ export ZOPEN_EXTRA_CPPFLAGS="-DNEED_FAKE_RFC2553=1"
 export ZOPEN_EXTRA_CFLAGS="$ZOPEN_EXTRA_CPPFLAGS" 
 export ZOPEN_SRC_DIR=unix
 export ZOPEN_CHECK_OPTS='test'
+export ZOPEN_COMP=CLANG
+
 rm -f $TCL_VERSION_STRING
 ln -s "tcl${TCL_VERSION}" $TCL_VERSION_STRING
 

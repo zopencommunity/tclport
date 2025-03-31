@@ -1,5 +1,5 @@
 # bump: tcl-version /TCL_VERSION="(.*)"/ https://sourceforge.net/projects/tcl/files/Tcl/|re:/Click.to.enter.([\d.]+)"/$1/|semver:*
-TCL_VERSION="8.6.13"
+TCL_VERSION="8.6.15"
 TCL_VR=$(echo $TCL_VERSION | cut -d '.' -f 1,2)
 TCL_VERSION_STRING="tcl-core${TCL_VERSION}-src"
 export ZOPEN_CATEGORIES="language"

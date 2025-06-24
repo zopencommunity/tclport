@@ -1,5 +1,5 @@
 diff --git a/generic/tclIO.c b/generic/tclIO.c
-index 43b7ce3..f85d3f4 100644
+index b22019c..4ee66b8 100644
 --- a/generic/tclIO.c
 +++ b/generic/tclIO.c
 @@ -15,6 +15,7 @@

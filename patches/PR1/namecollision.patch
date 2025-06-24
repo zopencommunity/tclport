@@ -1,8 +1,8 @@
 diff --git a/generic/regc_locale.c b/generic/regc_locale.c
-index 6a2baad..7102a9c 100644
+index 9dfea3f..3616296 100644
 --- a/generic/regc_locale.c
 +++ b/generic/regc_locale.c
-@@ -988,12 +988,12 @@ eclass(
+@@ -1002,12 +1002,12 @@ eclass(
  }
  
  /*
@@ -19,7 +19,7 @@ index 6a2baad..7102a9c 100644
      const chr *startp,		/* where the name starts */
      const chr *endp,		/* just past the end of the name */
 diff --git a/generic/regcomp.c b/generic/regcomp.c
-index d828b44..74b724f 100644
+index 949f397..d616c98 100644
 --- a/generic/regcomp.c
 +++ b/generic/regcomp.c
 @@ -187,7 +187,7 @@ static celt element(struct vars *, const chr *, const chr *);
@@ -31,7 +31,7 @@ index d828b44..74b724f 100644
  static struct cvec *allcases(struct vars *, pchr);
  static int cmp(const chr *, const chr *, size_t);
  static int casecmp(const chr *, const chr *, size_t);
-@@ -1546,7 +1546,7 @@ brackpart(
+@@ -1544,7 +1544,7 @@ brackpart(
  	endp = scanplain(v);
  	INSIST(startp < endp, REG_ECTYPE);
  	NOERR();

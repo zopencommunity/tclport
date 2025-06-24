@@ -1,17 +1,13 @@
 diff --git a/unix/configure b/unix/configure
-index 37cf113..088af82 100755
+index 66bc220..08ae627 100755
 --- a/unix/configure
 +++ b/unix/configure
-@@ -8036,11 +8036,9 @@ fi
- 	OS/390-*)
+@@ -6892,7 +6892,7 @@ fi
  	    SHLIB_LD_LIBS=""
  	    CFLAGS_OPTIMIZE=""		# Optimizer is buggy
--
- cat >>confdefs.h <<\_ACEOF
--#define _OE_SOCKETS 1
-+#define _XOPEN_SOURCE 600
- _ACEOF
--
+ 
+-printf "%s\n" "#define _OE_SOCKETS 1" >>confdefs.h
++printf "%s\n" "#define _XOPEN_SOURCE 600" >>confdefs.h
+ 
  	    ;;
- 	OSF1-1.0|OSF1-1.1|OSF1-1.2)
- 	    # OSF/1 1.[012] from OSF, and derivatives, including Paragon OSF/1
+ 	OSF1-V*)

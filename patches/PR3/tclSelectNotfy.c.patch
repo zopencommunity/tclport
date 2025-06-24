@@ -1,0 +1,35 @@
+diff --git a/unix/tclSelectNotfy.c b/unix/tclSelectNotfy.c
+index bede898..00d1684 100644
+--- a/unix/tclSelectNotfy.c
++++ b/unix/tclSelectNotfy.c
+@@ -421,7 +421,9 @@ TclpFinalizeNotifier(
+ 	}
+ 	pthread_mutex_unlock(&notifierMutex);
+ 	if (notifierThreadRunning) {
+-	    int result = pthread_join((pthread_t) notifierThread, NULL);
++	    pthread_t nT;
++	    nT.__ = notifierThread;
++	    int result = pthread_join(nT, NULL);
+ 
+ 	    if (result) {
+ 		Tcl_Panic("Tcl_FinalizeNotifier: %s",
+@@ -933,7 +935,9 @@ TclAsyncNotifier(
+      * e.g. pthread_self(), sem_post(), write().
+      */
+ 
+-    if (pthread_equal(pthread_self(), (pthread_t) notifierThread)) {
++    pthread_t nT;
++    nT.__ = notifierThread;
++    if (pthread_equal(pthread_self(), nT)) {
+ 	if (notifierThreadRunning) {
+ 	    *flagPtr = value;
+ 	    if (!asyncPending) {
+@@ -952,7 +956,7 @@ TclAsyncNotifier(
+      * Re-send the signal to the notifier thread.
+      */
+ 
+-    pthread_kill((pthread_t) notifierThread, sigNumber);
++    pthread_kill(nT, sigNumber);
+ #else
+     (void)sigNumber;
+     (void)flagPtr;

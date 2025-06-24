@@ -1,8 +1,8 @@
 diff --git a/unix/tclUnixThrd.c b/unix/tclUnixThrd.c
-index afb795d..4c8a28c 100644
+index 24bc72d..f2db02a 100644
 --- a/unix/tclUnixThrd.c
 +++ b/unix/tclUnixThrd.c
-@@ -85,7 +85,9 @@ TclpThreadCreate(
+@@ -224,7 +224,9 @@ TclpThreadCreate(
      int result;
  
      pthread_attr_init(&attr);
@@ -12,7 +12,7 @@ index afb795d..4c8a28c 100644
  
  #ifdef HAVE_PTHREAD_ATTR_SETSTACKSIZE
      if (stackSize != TCL_THREAD_STACK_DEFAULT) {
-@@ -124,7 +126,7 @@ TclpThreadCreate(
+@@ -263,7 +265,7 @@ TclpThreadCreate(
  		    (void * (*)(void *))(void *)proc, (void *)clientData)) {
  	result = TCL_ERROR;
      } else {
@@ -21,22 +21,21 @@ index afb795d..4c8a28c 100644
  	result = TCL_OK;
      }
      pthread_attr_destroy(&attr);
-@@ -160,8 +162,9 @@ Tcl_JoinThread(
- #ifdef TCL_THREADS
+@@ -305,7 +307,9 @@ Tcl_JoinThread(
      int result;
      unsigned long retcode, *retcodePtr = &retcode;
--
+ 
 -    result = pthread_join((pthread_t) threadId, (void**) retcodePtr);
 +    pthread_t threadData;
-+    threadData.__=threadId; 
++    threadData.__=threadId;
 +    result = pthread_join(threadData, (void**) retcodePtr);
      if (state) {
  	*state = (int) retcode;
      }
-@@ -216,7 +219,7 @@ Tcl_ThreadId
+@@ -365,7 +369,7 @@ Tcl_ThreadId
  Tcl_GetCurrentThread(void)
  {
- #ifdef TCL_THREADS
+ #if TCL_THREADS
 -    return (Tcl_ThreadId) pthread_self();
 +    return (Tcl_ThreadId) pthread_self().__;
  #else

@@ -13,28 +13,23 @@ export ZOPEN_EXTRA_CFLAGS="$ZOPEN_EXTRA_CPPFLAGS"
 export ZOPEN_SRC_DIR=unix
 export ZOPEN_CHECK_OPTS='test'
 export ZOPEN_COMP=CLANG
+export ZOPEN_CONFIGURE_OPTS="--prefix=\$ZOPEN_INSTALL_DIR"
+export ZOPEN_NAME="tcl"
+export ZOPEN_INSTALL="zopen_install"
 
-rm -f $TCL_VERSION_STRING
-ln -s "tcl${TCL_VERSION}" $TCL_VERSION_STRING
+unset TCL_LIBRARY
+
+zopen_install()
+{
+  make install
+  make install-private-headers
+}
 
 zopen_append_to_env() 
 {
 cat <<EOF
 export TCL_LIBRARY="\$PWD/lib/tcl${TCL_VR}"
 EOF
-}
-
-zopen_post_install()
-{
-  set -e
-  install_dir=$1
-  echo $install_dir
-  echo $PWD
-  mkdir -p $install_dir/lib/tcl${TCL_VR}
-  cp ../library/* $install_dir/lib/tcl${TCL_VR}/
-  cp ../generic/*.h $install_dir/include
-  cp *.h $install_dir/include
-  set +e
 }
 
 zopen_check_results()

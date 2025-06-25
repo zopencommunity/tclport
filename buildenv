@@ -30,6 +30,8 @@ zopen_post_install()
   install_dir=$1
   echo $install_dir
   echo $PWD
+  mkdir -p $install_dir/lib/tcl${TCL_VR}
+  cp ../library/init.tcl $install_dir/lib/tcl${TCL_VR}/
   cp ../generic/*.h $install_dir/include
   cp *.h $install_dir/include
   set +e

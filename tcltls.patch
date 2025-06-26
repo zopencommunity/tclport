@@ -1,0 +1,13 @@
+diff --git a/configure b/configure
+index b325075..c9fd7dd 100755
+--- a/configure
++++ b/configure
+@@ -7768,7 +7768,7 @@ fi
+ 	OS/390-*)
+ 	    CFLAGS_OPTIMIZE=""		# Optimizer is buggy
+ 
+-printf "%s\n" "#define _OE_SOCKETS 1" >>confdefs.h
++printf "%s\n" "#define _XOPEN_SOURCE 600" >>confdefs.h
+ 
+ 	    ;;
+ 	OSF1-V*)

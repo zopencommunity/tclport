@@ -13,7 +13,7 @@ export ZOPEN_EXTRA_CFLAGS="$ZOPEN_EXTRA_CPPFLAGS"
 export ZOPEN_SRC_DIR=unix
 export ZOPEN_CHECK_OPTS='test'
 export ZOPEN_COMP=CLANG
-export ZOPEN_CONFIGURE_OPTS="--prefix=\$ZOPEN_INSTALL_DIR"
+export ZOPEN_CONFIGURE_OPTS="--prefix=\$ZOPEN_INSTALL_DIR --enable-load"
 export ZOPEN_NAME="tcl"
 export ZOPEN_INSTALL="zopen_install"
 
@@ -48,7 +48,7 @@ zopen_post_install()
   fi
   
   if [ ! -f config.status ]; then
-      ./configure --prefix="$ZOPEN_INSTALL_DIR" --disable-shared \
+      ./configure --prefix="$ZOPEN_INSTALL_DIR" \
         --with-openssl-dir="$OPENSSL_HOME" \
         --with-openssl-includedir="$OPENSSL_HOME/include" \
         --with-openssl-libdir="$OPENSSL_HOME/lib" \

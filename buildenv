@@ -6,7 +6,7 @@ export ZOPEN_CATEGORIES="language"
 
 export ZOPEN_BUILD_LINE="STABLE"
 export ZOPEN_STABLE_URL="https://sourceforge.net/projects/tcl/files/Tcl/${TCL_VERSION}/${TCL_VERSION_STRING}.tar.gz"
-export ZOPEN_STABLE_DEPS="curl gzip make zoslib pkgconfig openssl patch"
+export ZOPEN_STABLE_DEPS="curl gzip make zoslib pkgconfig openssl"
 export ZOPEN_CHECK="skip"
 export ZOPEN_EXTRA_CPPFLAGS="-DNEED_FAKE_RFC2553=1"
 export ZOPEN_EXTRA_CFLAGS="$ZOPEN_EXTRA_CPPFLAGS" 
@@ -20,44 +20,6 @@ export ZOPEN_INSTALL="zopen_install"
 zopen_init()
 {
   unset TCL_LIBRARY
-}
-
-zopen_post_install()
-{
-  curr_dir="$(pwd)"
-  
-  found=0
-  for dir in tcltls*/; do
-      [ -d "$dir" ] && found=1 && break
-  done
-  
-  if [ "$found" -eq 0 ]; then
-      echo "Directory not found, downloading and extracting..."
-      curl -L -o tcltls.tar.gz https://core.tcl-lang.org/tcltls/tarball/e03e54ee87/tcltls-e03e54ee87.tar.gz
-      tar -xvzf tcltls.tar.gz
-      rm -f tcltls.tar.gz
-      patch_needed=1
-  fi
-  
-  for dir in tcltls*/; do
-      [ -d "$dir" ] && cd "$dir" && break
-  done
-  
-  if [ "$patch_needed" = "1" ]; then
-      patch -p1 < "${ZOPEN_ROOT}/tcltls.patch"
-  fi
-  
-  if [ ! -f config.status ]; then
-      ./configure --prefix="$ZOPEN_INSTALL_DIR" \
-        --with-openssl-dir="$OPENSSL_HOME" \
-        --with-openssl-includedir="$OPENSSL_HOME/include" \
-        --with-openssl-libdir="$OPENSSL_HOME/lib" \
-        --with-openssl-pkgconfig="$OPENSSL_HOME/lib/pkgconfig"
-  fi
-  
-  make install
-  
-  cd "$curr_dir"
 }
 
 zopen_install()

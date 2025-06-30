@@ -16,6 +16,7 @@ export ZOPEN_COMP=CLANG
 export ZOPEN_CONFIGURE_OPTS="--prefix=\$ZOPEN_INSTALL_DIR --enable-load"
 export ZOPEN_NAME="tcl"
 export ZOPEN_INSTALL="zopen_install"
+export ZOPEN_RUNTIME_DEPS="tcltls"
 
 zopen_init()
 {

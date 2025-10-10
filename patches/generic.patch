@@ -1,8 +1,8 @@
 diff --git a/generic/regc_locale.c b/generic/regc_locale.c
-index 6a2baad..7102a9c 100644
+index 9dfea3f..3616296 100644
 --- a/generic/regc_locale.c
 +++ b/generic/regc_locale.c
-@@ -988,12 +988,12 @@ eclass(
+@@ -1002,12 +1002,12 @@ eclass(
  }
  
  /*
@@ -19,7 +19,7 @@ index 6a2baad..7102a9c 100644
      const chr *startp,		/* where the name starts */
      const chr *endp,		/* just past the end of the name */
 diff --git a/generic/regcomp.c b/generic/regcomp.c
-index d828b44..74b724f 100644
+index 949f397..d616c98 100644
 --- a/generic/regcomp.c
 +++ b/generic/regcomp.c
 @@ -187,7 +187,7 @@ static celt element(struct vars *, const chr *, const chr *);
@@ -31,7 +31,7 @@ index d828b44..74b724f 100644
  static struct cvec *allcases(struct vars *, pchr);
  static int cmp(const chr *, const chr *, size_t);
  static int casecmp(const chr *, const chr *, size_t);
-@@ -1546,7 +1546,7 @@ brackpart(
+@@ -1544,7 +1544,7 @@ brackpart(
  	endp = scanplain(v);
  	INSIST(startp < endp, REG_ECTYPE);
  	NOERR();
@@ -40,3 +40,28 @@ index d828b44..74b724f 100644
  	NOERR();
  	dovec(v, cv, lp, rp);
  	return;
+diff --git a/generic/tclIO.c b/generic/tclIO.c
+index b22019c..4ee66b8 100644
+--- a/generic/tclIO.c
++++ b/generic/tclIO.c
+@@ -15,6 +15,7 @@
+ #include "tclInt.h"
+ #include "tclIO.h"
+ #include <assert.h>
++#include <errno.h>
+ 
+ /*
+  * For each channel handler registered in a call to Tcl_CreateChannelHandler,
+diff --git a/generic/tclZipfs.c b/generic/tclZipfs.c
+index 1ec81b7..1b74e34 100644
+--- a/generic/tclZipfs.c
++++ b/generic/tclZipfs.c
+@@ -4394,7 +4394,7 @@ TclZipfs_TclLibrary(void)
+     if (ZipfsAppHookFindTclInit(dllName) == TCL_OK) {
+ 	return ScriptLibrarySetup(zipfs_literal_tcl_library);
+     }
+-#elif !defined(NO_DLFCN_H)
++#elif !defined(NO_DLFCN_H) && !defined(__MVS__)
+     Dl_info dlinfo;
+     if (dladdr((const void *)TclZipfs_TclLibrary, &dlinfo) && (dlinfo.dli_fname != NULL)
+ 	    && (ZipfsAppHookFindTclInit(dlinfo.dli_fname) == TCL_OK)) {

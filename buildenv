@@ -59,9 +59,9 @@ zopen_check_results()
     return
   fi
 
-  # Extract values from the summary line using grep -a to treat as text
-  totalTests=$(grep -a "all.tcl:.*Total.*Passed.*Skipped.*Failed" "$chk" | awk '{print $3}')
-  failedTests=$(grep -a "all.tcl:.*Total.*Passed.*Skipped.*Failed" "$chk" | awk '{print $9}')
+  # Extract values from the summary line using strings to handle binary/EBCDIC
+  totalTests=$(strings "$chk" | grep "all.tcl:.*Total.*Passed.*Skipped.*Failed" | awk '{print $3}')
+  failedTests=$(strings "$chk" | grep "all.tcl:.*Total.*Passed.*Skipped.*Failed" | awk '{print $9}')
 
   # Default to 0 if grep failed
   totalTests=${totalTests:-0}

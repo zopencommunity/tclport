@@ -23,6 +23,13 @@ zopen_pre_patch()
   export CFLAGS="$CFLAGS $CPPFLAGS"
 }
 
+zopen_post_patch()
+{
+  # Fix embtest link line to include stub library
+  # embtest uses USE_TCL_STUBS but wasn't linking against libtclstub.a
+  patch -p1 < "${ZOPEN_ROOT}/patches/dltest-makefile.patch"
+}
+
 zopen_init()
 {
   unset TCL_LIBRARY

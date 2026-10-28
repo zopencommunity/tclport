@@ -1,0 +1,11 @@
+--- a/unix/dltest/Makefile.in
++++ b/unix/dltest/Makefile.in
+@@ -78,7 +78,7 @@ embtest.o: $(SRC_DIR)/embtest.c
+ 	$(CC) -c $(CC_SWITCHES) $(SRC_DIR)/embtest.c
+ 
+ embtest: embtest.o
+-	$(CC) $(CC_SWITCHES) -o $@ embtest.o ${SHLIB_LD_LIBS}
++	$(CC) $(CC_SWITCHES) -o $@ embtest.o ${LIBS} ${SHLIB_LD_LIBS}
+ 
+ tcl9pkgπ${SHLIB_SUFFIX}: pkgπ.o
+ 	${SHLIB_LD} -o $@ pkgπ.o ${SHLIB_LD_LIBS}

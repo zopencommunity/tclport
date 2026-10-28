@@ -59,11 +59,20 @@ zopen_check_results()
     return
   fi
 
-  # Extract values from the summary line using strings to handle binary/EBCDIC
-  totalTests=$(strings "$chk" | grep "all.tcl:.*Total.*Passed.*Skipped.*Failed" | awk '{print $3}')
-  failedTests=$(strings "$chk" | grep "all.tcl:.*Total.*Passed.*Skipped.*Failed" | awk '{print $9}')
+  # Try multiple methods to extract data from potentially binary/EBCDIC log
+  # Method 1: strings (most reliable for mixed encoding)
+  if command -v strings >/dev/null 2>&1; then
+    totalTests=$(strings "$chk" 2>/dev/null | grep "all.tcl:.*Total.*Passed.*Skipped.*Failed" | awk '{print $3}' | head -1)
+    failedTests=$(strings "$chk" 2>/dev/null | grep "all.tcl:.*Total.*Passed.*Skipped.*Failed" | awk '{print $9}' | head -1)
+  fi
+  
+  # Method 2: iconv fallback if strings didn't work
+  if [ -z "$totalTests" ] && command -v iconv >/dev/null 2>&1; then
+    totalTests=$(iconv -f ISO8859-1 -t UTF-8 "$chk" 2>/dev/null | grep "all.tcl:.*Total.*Passed.*Skipped.*Failed" | awk '{print $3}' | head -1)
+    failedTests=$(iconv -f ISO8859-1 -t UTF-8 "$chk" 2>/dev/null | grep "all.tcl:.*Total.*Passed.*Skipped.*Failed" | awk '{print $9}' | head -1)
+  fi
 
-  # Default to 0 if grep failed
+  # Default to 0 if all methods failed
   totalTests=${totalTests:-0}
   failedTests=${failedTests:-0}
 

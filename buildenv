@@ -7,7 +7,7 @@ export ZOPEN_CATEGORIES="language"
 export ZOPEN_BUILD_LINE="STABLE"
 export ZOPEN_STABLE_URL="https://sourceforge.net/projects/tcl/files/Tcl/${TCL_VERSION}/${TCL_VERSION_STRING}.tar.gz"
 export ZOPEN_STABLE_DEPS="curl gzip make zoslib pkgconfig openssl findutils"
-export ZOPEN_CHECK="skip"
+export ZOPEN_CHECK="test"
 export ZOPEN_EXTRA_CPPFLAGS="-DNEED_FAKE_RFC2553=1"
 export ZOPEN_EXTRA_CFLAGS="$ZOPEN_EXTRA_CPPFLAGS" 
 export ZOPEN_SRC_DIR=unix
@@ -32,6 +32,7 @@ zopen_install()
 {
   make install
   make install-private-headers
+  make install-libraries
 }
 
 zopen_append_to_env() 
@@ -43,7 +44,34 @@ EOF
 
 zopen_check_results()
 {
-  return 3 # non-functional
+  dir="$1"
+  pfx="$2"
+  chk="$1/$2_check.log"
+
+  # Extract test statistics from TCL test output
+  # Format: all.tcl:	Total	29171	Passed	18719	Skipped	10352	Failed	100
+  
+  if [ ! -f "$chk" ]; then
+    echo "actualFailures:0"
+    echo "totalTests:0"
+    echo "expectedFailures:0"
+    echo "expectedTotalTests:1"
+    return
+  fi
+
+  # Extract values from the summary line using grep -a to treat as text
+  totalTests=$(grep -a "all.tcl:.*Total.*Passed.*Skipped.*Failed" "$chk" | awk '{print $3}')
+  failedTests=$(grep -a "all.tcl:.*Total.*Passed.*Skipped.*Failed" "$chk" | awk '{print $9}')
+
+  # Default to 0 if grep failed
+  totalTests=${totalTests:-0}
+  failedTests=${failedTests:-0}
+
+  # Output in zopen format
+  echo "actualFailures:$failedTests"
+  echo "totalTests:$totalTests"
+  echo "expectedFailures:100"       # We expect ~100 failures on z/OS
+  echo "expectedTotalTests:29000"   # We expect at least 29,000 tests to run
 }
 
 zopen_get_version()

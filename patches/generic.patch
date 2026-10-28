@@ -1,3 +1,17 @@
+diff --git a/compat/zlib/contrib/minizip/tinydir.h b/compat/zlib/contrib/minizip/tinydir.h
+index b8133ac..ad793ff 100644
+--- a/compat/zlib/contrib/minizip/tinydir.h
++++ b/compat/zlib/contrib/minizip/tinydir.h
+@@ -41,6 +41,9 @@ extern "C" {
+ #define _UNICODE
+ #endif
+ 
++#if defined(__MVS__)
++#define _XOPEN_SOURCE 600
++#endif
+ #include <errno.h>
+ #include <stdlib.h>
+ #include <string.h>
 diff --git a/generic/regc_locale.c b/generic/regc_locale.c
 index 9dfea3f..3616296 100644
 --- a/generic/regc_locale.c
@@ -41,7 +55,7 @@ index 949f397..d616c98 100644
  	dovec(v, cv, lp, rp);
  	return;
 diff --git a/generic/tclIO.c b/generic/tclIO.c
-index b22019c..4ee66b8 100644
+index c884934..0377e44 100644
 --- a/generic/tclIO.c
 +++ b/generic/tclIO.c
 @@ -15,6 +15,7 @@
@@ -52,11 +66,23 @@ index b22019c..4ee66b8 100644
  
  /*
   * For each channel handler registered in a call to Tcl_CreateChannelHandler,
+diff --git a/generic/tclInt.h b/generic/tclInt.h
+index f088545..692dfe9 100644
+--- a/generic/tclInt.h
++++ b/generic/tclInt.h
+@@ -71,6 +71,7 @@
+ #include <string.h>
+ #include <locale.h>
+ 
++#include <strings.h>
+ /*
+  * Ensure WORDS_BIGENDIAN is defined correctly:
+  * Needs to happen here in addition to configure to work with fat compiles on
 diff --git a/generic/tclZipfs.c b/generic/tclZipfs.c
-index 1ec81b7..1b74e34 100644
+index 7530cc2..4693091 100644
 --- a/generic/tclZipfs.c
 +++ b/generic/tclZipfs.c
-@@ -4394,7 +4394,7 @@ TclZipfs_TclLibrary(void)
+@@ -4396,7 +4396,7 @@ TclZipfs_TclLibrary(void)
      if (ZipfsAppHookFindTclInit(dllName) == TCL_OK) {
  	return ScriptLibrarySetup(zipfs_literal_tcl_library);
      }
